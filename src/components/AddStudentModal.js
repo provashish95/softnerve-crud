@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
-const AddStudentModal = ({ show, setShow }) => {
+const AddStudentModal = ({ show, setShow, setIsReload, isReload }) => {
     const nameRef = useRef('');
     const rollRef = useRef('');
     const phoneRef = useRef('');
@@ -28,6 +28,7 @@ const AddStudentModal = ({ show, setShow }) => {
             .then(inserted => {
                 if (inserted.insertedId) {
                     toast.success('Product added Successfully')
+                    setIsReload(!isReload)
                     e.target.reset();
                 } else {
                     toast.error('Product not added Successfully')

@@ -1,26 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AddStudentModal from './AddStudentModal';
 import DeleteModal from './DeleteModal';
 import EditModal from './EditModal';
+import TableRow from './TableRow';
 
 const Home = () => {
     const [show, setShow] = useState(false);
     const [edit, setEdit] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
+    const [isReload, setIsReload] = useState(false);
+    const [students, setStudents] = useState()
 
+    useEffect(() => {
+        const url = `http://localhost:5000/student`;
+        fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                setStudents(data);
+            })
+    }, [isReload]);
 
     const handleShow = () => setShow(true);
-
-    const handleEdit = () => setEdit(true);
-
-    const handleDelete = () => setIsDelete(true);
 
     return (
         <main className='container py-5'>
             <h5 className='text-center'>All Students</h5>
             <div className='table-responsive'>
                 <table className="table table-hover border border-1 border-dark text-center">
-                    <thead >
+                    <thead>
                         <tr>
                             <th scope="col">SL</th>
                             <th scope="col">Name</th>
@@ -31,17 +38,9 @@ const Home = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>g</td>
-                            <td>dsdg</td>
-                            <td>dfsdsfs</td>
-                            <td>dfgdfgdgdgdfgdgd.</td>
-                            <td>
-                                <button onClick={handleEdit} className='btn btn-outline-info m-1'>Edit</button>
-                                <button onClick={handleDelete} className='btn btn-outline-danger'>Delete</button>
-                            </td>
-                        </tr >
+                        {
+                            students?.map((student, index) => <TableRow key={student._id} student={student} index={index} setEdit={setEdit} setIsDelete={setIsDelete}></TableRow>)
+                        }
                     </tbody>
                 </table>
             </div>
@@ -49,7 +48,7 @@ const Home = () => {
                 <button onClick={handleShow} className='btn btn-outline-info'>Add Student</button>
             </div>
 
-            <AddStudentModal show={show} setShow={setShow}></AddStudentModal>
+            <AddStudentModal show={show} setShow={setShow} setIsReload={setIsReload} isReload={isReload}></AddStudentModal>
             <EditModal edit={edit} setEdit={setEdit}></EditModal>
             <DeleteModal isDelete={isDelete} setIsDelete={setIsDelete}></DeleteModal>
         </main>
