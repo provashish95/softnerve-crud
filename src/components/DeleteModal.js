@@ -1,7 +1,23 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 
-const DeleteModal = ({ isDelete, setIsDelete }) => {
+const DeleteModal = ({ isDelete, setIsDelete, setIsReload, isReload, studentInfo }) => {
+
+    const { _id } = studentInfo;
+
+    const handleDelete = () => {
+        const url = `https://blooming-bayou-78618.herokuapp.com/student/${_id}`;
+        fetch(url, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(data => {
+                toast.success('Deleted')
+                setIsReload(!isReload)
+                setIsDelete(false)
+            })
+    }
 
     const handleDeleteClose = () => setIsDelete(false)
 
@@ -13,18 +29,14 @@ const DeleteModal = ({ isDelete, setIsDelete }) => {
                 backdrop="static"
                 keyboard={false}
             >
-                <Modal.Header closeButton>
-                    <Modal.Title>Modal title</Modal.Title>
-                </Modal.Header>
                 <Modal.Body>
-                    I will not close if you click outside me. Don't even try to press
-                    escape key.
+                    Are You sure to delete student info ?
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleDeleteClose}>
-                        Close
+                        No
                     </Button>
-                    <Button variant="primary">Understood</Button>
+                    <Button variant="danger" onClick={handleDelete}>Yes</Button>
                 </Modal.Footer>
             </Modal>
         </div>

@@ -1,11 +1,18 @@
 import React from 'react';
 
-const TableRow = ({ student, index, setEdit, setIsDelete }) => {
+const TableRow = ({ student, index, setEdit, setIsDelete, setStudentInfo }) => {
 
-    const { _id, name, phone, roll, isClass } = student;
+    const { name, phone, roll, isClass } = student;
 
-    const handleEdit = () => setEdit(true);
-    const handleDelete = () => setIsDelete(true);
+    const handleEdit = () => {
+        setEdit(true);
+        setStudentInfo(student);
+    }
+
+    const handleDelete = () => {
+        setIsDelete(true);
+        setStudentInfo(student);
+    }
 
     return (
         <tr>

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 const AddStudentModal = ({ show, setShow, setIsReload, isReload }) => {
@@ -15,7 +15,7 @@ const AddStudentModal = ({ show, setShow, setIsReload, isReload }) => {
         const phone = phoneRef.current.value;
         const isClass = classRef.current.value;
 
-        fetch('http://localhost:5000/student', {
+        fetch('https://blooming-bayou-78618.herokuapp.com/student', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'

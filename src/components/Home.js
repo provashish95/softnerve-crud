@@ -9,10 +9,11 @@ const Home = () => {
     const [edit, setEdit] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
     const [isReload, setIsReload] = useState(false);
-    const [students, setStudents] = useState()
+    const [students, setStudents] = useState();
+    const [studentInfo, setStudentInfo] = useState({});
 
     useEffect(() => {
-        const url = `http://localhost:5000/student`;
+        const url = `https://blooming-bayou-78618.herokuapp.com/student`;
         fetch(url)
             .then(res => res.json())
             .then(data => {
@@ -21,6 +22,8 @@ const Home = () => {
     }, [isReload]);
 
     const handleShow = () => setShow(true);
+
+
 
     return (
         <main className='container py-5'>
@@ -39,7 +42,7 @@ const Home = () => {
                     </thead>
                     <tbody>
                         {
-                            students?.map((student, index) => <TableRow key={student._id} student={student} index={index} setEdit={setEdit} setIsDelete={setIsDelete}></TableRow>)
+                            students?.map((student, index) => <TableRow key={student._id} student={student} index={index} setEdit={setEdit} setIsDelete={setIsDelete} setStudentInfo={setStudentInfo}></TableRow>)
                         }
                     </tbody>
                 </table>
@@ -49,8 +52,8 @@ const Home = () => {
             </div>
 
             <AddStudentModal show={show} setShow={setShow} setIsReload={setIsReload} isReload={isReload}></AddStudentModal>
-            <EditModal edit={edit} setEdit={setEdit}></EditModal>
-            <DeleteModal isDelete={isDelete} setIsDelete={setIsDelete}></DeleteModal>
+            <EditModal edit={edit} setEdit={setEdit} setIsReload={setIsReload} isReload={isReload} studentInfo={studentInfo}></EditModal>
+            <DeleteModal isDelete={isDelete} setIsDelete={setIsDelete} setIsReload={setIsReload} isReload={isReload} studentInfo={studentInfo}></DeleteModal>
         </main>
     );
 };
