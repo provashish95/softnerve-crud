@@ -3,8 +3,8 @@ import React from 'react';
 
 const Navbar = () => {
     return (
-        <nav class="navbar navbar-expand-lg navbar-dark bg-info py-3">
-            <div class="container">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-info py-3">
+            <div className="container">
                 <h3>Softnerve Technology Private Limited</h3>
             </div>
         </nav>
